@@ -1,26 +1,208 @@
 <!DOCTYPE html>
 <html lang="ru">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Выбор даты и времени</title>
-    <link rel="stylesheet" href="styles.css" />
-  </head>
-  <body>
-    <!--
-      ЗАДАНИЕ
-      ========
-      Сверстать страницу выбора даты и времени по своему макету.
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>СЕТЬ — Выбор даты и времени</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
 
-      Пока это только вёрстка. Никакого JavaScript — ни кликов,
-      ни переходов, ни выбора дня. Всё статично.
-
-      Стили пишите в styles.css. Разметку — здесь.
-    -->
-
-    <div class="page">
-      <!-- Начните отсюда. Разметьте шапку, основную область
-           с календарём и слотами, подвал. -->
+  <header class="site-header">
+    <div class="container site-header__inner">
+      <a class="logo" href="#">
+        <svg class="logo__mark" width="36" height="36" viewBox="0 0 36 36" aria-hidden="true">
+          <circle cx="18" cy="18" r="18" fill="#95DB84"/>
+          <g fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round">
+            <circle cx="11.5" cy="11.5" r="3"/>
+            <circle cx="11.5" cy="24.5" r="3"/>
+            <path d="M14 13.5 26 25.5"/>
+            <path d="M14 22.5 26 10.5"/>
+          </g>
+        </svg>
+        <span class="logo__name"><span>Сеть</span><span>парикмахерских</span></span>
+      </a>
+      <nav class="nav" aria-label="Основная навигация">
+        <a class="nav__link" href="#">Услуги</a>
+        <a class="nav__link" href="#">Галерея</a>
+        <a class="nav__link" href="#">Команда</a>
+        <a class="nav__link" href="#">Отзывы</a>
+        <a class="nav__link" href="#">Контакты</a>
+      </nav>
     </div>
-  </body>
+  </header>
+
+  <section class="steps-section" aria-label="Этапы записи">
+    <div class="container">
+      <ol class="steps">
+        <li class="steps__item steps__item--done">
+          <span class="steps__num">1</span>
+          <span class="steps__label">Мастер</span>
+          <span class="steps__line"></span>
+        </li>
+        <li class="steps__item steps__item--done">
+          <span class="steps__num">2</span>
+          <span class="steps__label">Услуга</span>
+          <span class="steps__line"></span>
+        </li>
+        <li class="steps__item steps__item--current">
+          <span class="steps__num">3</span>
+          <span class="steps__label">Календарь</span>
+          <span class="steps__line"></span>
+        </li>
+        <li class="steps__item steps__item--future">
+          <span class="steps__num">4</span>
+          <span class="steps__label">Контакты</span>
+          <span class="steps__line"></span>
+        </li>
+        <li class="steps__item steps__item--future">
+          <span class="steps__num">5</span>
+          <span class="steps__label">Подтверждение</span>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <main class="page">
+    <div class="container">
+      <h1 class="page__title">Выберите дату и время</h1>
+
+      <div class="page__layout">
+
+        <section class="card card--calendar" aria-label="Календарь">
+          <header class="calendar__head">
+            <h2 class="calendar__month">Июнь 2025</h2>
+            <div class="calendar__nav">
+              <button class="calendar__arrow" type="button" aria-label="Предыдущий месяц">
+                <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true">
+                  <path d="M8.5 3.5 5 7l3.5 3.5" fill="none" stroke="#333333" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </button>
+              <button class="calendar__arrow" type="button" aria-label="Следующий месяц">
+                <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true">
+                  <path d="M5.5 3.5 9 7l-3.5 3.5" fill="none" stroke="#333333" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </button>
+            </div>
+          </header>
+
+          <div class="calendar__weekdays">
+            <span>Пн</span><span>Вт</span><span>Ср</span><span>Чт</span><span>Пт</span><span>Сб</span><span>Вс</span>
+          </div>
+
+          <div class="calendar__days">
+            <span class="day day--muted">26</span>
+            <span class="day day--muted">27</span>
+            <span class="day day--muted">28</span>
+            <span class="day day--muted">29</span>
+            <span class="day day--muted">30</span>
+            <span class="day day--muted">31</span>
+            <span class="day day--muted">1</span>
+
+            <button class="day day--free" type="button">2</button>
+            <button class="day day--free" type="button">3</button>
+            <button class="day day--free" type="button">4</button>
+            <button class="day day--selected" type="button" aria-pressed="true">5</button>
+            <button class="day day--free" type="button">6</button>
+            <span class="day day--off">7</span>
+            <span class="day day--off">8</span>
+
+            <button class="day day--free" type="button">9</button>
+            <button class="day day--free" type="button">10</button>
+            <button class="day day--free" type="button">11</button>
+            <button class="day day--free" type="button">12</button>
+            <button class="day day--free" type="button">13</button>
+            <button class="day day--free" type="button">14</button>
+            <button class="day day--free" type="button">15</button>
+
+            <button class="day day--free" type="button">16</button>
+            <button class="day day--free" type="button">17</button>
+            <button class="day day--free" type="button">18</button>
+            <button class="day day--free" type="button">19</button>
+            <button class="day day--free" type="button">20</button>
+            <button class="day day--free" type="button">21</button>
+            <button class="day day--free" type="button">22</button>
+          </div>
+        </section>
+
+        <section class="card card--time" aria-label="Выбор времени">
+          <h2 class="time__title">Доступное время</h2>
+          <div class="time__grid">
+            <button class="slot" type="button">10:00</button>
+            <button class="slot slot--busy" type="button" disabled>11:00<span class="slot__note">Занято</span></button>
+            <button class="slot" type="button">12:00</button>
+            <button class="slot slot--busy" type="button" disabled>13:00<span class="slot__note">Занято</span></button>
+            <button class="slot slot--selected" type="button" aria-pressed="true">14:00</button>
+            <button class="slot" type="button">15:00</button>
+            <button class="slot" type="button">16:00</button>
+            <button class="slot" type="button">17:00</button>
+          </div>
+        </section>
+
+      </div>
+
+      <div class="page__actions">
+        <button class="btn" type="button">Назад</button>
+        <p class="page__summary">Вы записались на:<br>5 ИЮНЯ 2025 ГОДА на 14:00</p>
+        <button class="btn" type="button">Далее</button>
+      </div>
+
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__cols">
+
+        <div class="footer__col footer__about">
+          <a class="logo logo--footer" href="#">
+            <svg class="logo__mark" width="36" height="36" viewBox="0 0 36 36" aria-hidden="true">
+              <circle cx="18" cy="18" r="18" fill="#95DB84"/>
+              <g fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round">
+                <circle cx="11.5" cy="11.5" r="3"/>
+                <circle cx="11.5" cy="24.5" r="3"/>
+                <path d="M14 13.5 26 25.5"/>
+                <path d="M14 22.5 26 10.5"/>
+              </g>
+            </svg>
+            <span class="logo__name"><span>Сеть</span><span>парикмахерских</span></span>
+          </a>
+          <p class="footer__desc">Стрижки, окрашивание, уход. Мастера своего дела, честные цены, отличное настроение. Ждём вас!</p>
+        </div>
+
+        <div class="footer__col">
+          <h3 class="footer__heading">Контакты</h3>
+          <ul class="footer__list">
+            <li class="footer__contact">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 1 1 16 0Z"/>
+                <circle cx="12" cy="10" r="3"/>
+              </svg>
+              <span>ул. Садовая, 15, Москва</span>
+            </li>
+            <li class="footer__contact footer__contact--phone">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+              </svg>
+              <a class="footer__phone" href="tel:+74951234567">+7 (495) 123-45-67</a>
+            </li>
+          </ul>
+        </div>
+
+        <div class="footer__col">
+          <h3 class="footer__heading">Режим работы</h3>
+          <p class="footer__hours">Пн–Пт: 9:00 – 21:00</p>
+          <p class="footer__hours">Сб–Вс: 10:00 – 19:00</p>
+        </div>
+
+      </div>
+
+      <div class="footer__bottom">
+        <span>© 2026. Все права защищены.</span>
+        <a class="footer__policy" href="#">Политика конфиденциальности</a>
+      </div>
+    </div>
+  </footer>
+
+</body>
 </html>
