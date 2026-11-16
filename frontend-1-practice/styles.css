@@ -1,10 +1,4 @@
-/* ============================================================
-   СЕТЬ — страница «Выбор даты и времени»
-   Верстка по макету (экран «Календарь»)
-   ============================================================ */
-
 :root {
-  /* Цвета из макета */
   --color-bg: #F9F9F9;
   --color-surface: #FFFFFF;
   --color-ink: #242424;
@@ -12,33 +6,23 @@
   --color-text-secondary: #606666;
   --color-text-muted: #999999;
   --color-accent-green: #95DB84;
-
-  /* Степпер */
   --color-step-done: #7F7F7F;
   --color-step-current: #242424;
   --color-step-future: #EBEBEB;
   --color-step-line: #D5D5D5;
-
-  /* Календарь */
   --color-day-bg: #EDEDED;
   --color-day-bg-hover: #DEDEDE;
   --color-arrow-bg: #F0F0F0;
   --color-arrow-bg-hover: #E2E2E2;
-
-  /* Слоты времени */
   --color-slot-border: #F0F1F0;
   --color-slot-border-hover: #ADADAD;
   --color-slot-busy-bg: #F5F5F3;
   --color-slot-selected: #7F7F7F;
-
-  /* Футер */
   --color-footer-bg: #565656;
   --color-footer-divider: #3D4243;
   --color-footer-text: #D0D5D5;
   --color-footer-muted: #A0A5A5;
   --color-footer-copyright: #808585;
-
-  /* Радиусы из макета */
   --radius-card: 12px;
   --radius-day: 18px;
   --radius-slot: 8px;
@@ -68,10 +52,6 @@ h1, h2, h3, p, ul, ol {
   margin: 0 auto;
   padding: 0 48px;
 }
-
-/* ============================================================
-   Шапка
-   ============================================================ */
 
 .site-header {
   background-color: var(--color-surface);
@@ -123,10 +103,6 @@ h1, h2, h3, p, ul, ol {
 .nav__link:hover {
   color: var(--color-ink);
 }
-
-/* ============================================================
-   Степпер (1 — Мастер, 2 — Услуга, 3 — Календарь, 4 — Контакты, 5 — Подтверждение)
-   ============================================================ */
 
 .steps-section {
   background-color: var(--color-surface);
@@ -184,10 +160,6 @@ h1, h2, h3, p, ul, ol {
   margin-left: 8px;
 }
 
-/* ============================================================
-   Основной контент
-   ============================================================ */
-
 .page {
   padding: 40px 0 64px;
 }
@@ -220,8 +192,6 @@ h1, h2, h3, p, ul, ol {
   width: 380px;
   flex-shrink: 0;
 }
-
-/* ---------- Календарь ---------- */
 
 .card--calendar {
   display: flex;
@@ -313,8 +283,6 @@ h1, h2, h3, p, ul, ol {
   color: var(--color-text-muted);
 }
 
-/* ---------- Слоты времени ---------- */
-
 .card--time {
   display: flex;
   flex-direction: column;
@@ -379,8 +347,6 @@ h1, h2, h3, p, ul, ol {
   color: #FFFFFF;
 }
 
-/* ---------- Кнопки «Назад» / «Далее» ---------- */
-
 .page__actions {
   display: flex;
   justify-content: space-between;
@@ -410,10 +376,6 @@ h1, h2, h3, p, ul, ol {
   color: #000000;
   text-align: center;
 }
-
-/* ============================================================
-   Футер
-   ============================================================ */
 
 .footer {
   background-color: var(--color-footer-bg);
@@ -503,18 +465,10 @@ h1, h2, h3, p, ul, ol {
   color: var(--color-footer-text);
 }
 
-/* ============================================================
-   Доступность
-   ============================================================ */
-
 :focus-visible {
   outline: 2px solid var(--color-ink);
   outline-offset: 2px;
 }
-
-/* ============================================================
-   Адаптив
-   ============================================================ */
 
 @media (max-width: 1024px) {
   .container {
