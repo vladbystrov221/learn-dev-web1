@@ -1,0 +1,559 @@
+/* ============================================================
+   СЕТЬ — страница «Выбор даты и времени»
+   Верстка по макету (экран «Календарь»)
+   ============================================================ */
+
+:root {
+  /* Цвета из макета */
+  --color-bg: #F9F9F9;
+  --color-surface: #FFFFFF;
+  --color-ink: #242424;
+  --color-heading: #333333;
+  --color-text-secondary: #606666;
+  --color-text-muted: #999999;
+  --color-accent-green: #95DB84;
+
+  /* Степпер */
+  --color-step-done: #7F7F7F;
+  --color-step-current: #242424;
+  --color-step-future: #EBEBEB;
+  --color-step-line: #D5D5D5;
+
+  /* Календарь */
+  --color-day-bg: #EDEDED;
+  --color-day-bg-hover: #DEDEDE;
+  --color-arrow-bg: #F0F0F0;
+  --color-arrow-bg-hover: #E2E2E2;
+
+  /* Слоты времени */
+  --color-slot-border: #F0F1F0;
+  --color-slot-border-hover: #ADADAD;
+  --color-slot-busy-bg: #F5F5F3;
+  --color-slot-selected: #7F7F7F;
+
+  /* Футер */
+  --color-footer-bg: #565656;
+  --color-footer-divider: #3D4243;
+  --color-footer-text: #D0D5D5;
+  --color-footer-muted: #A0A5A5;
+  --color-footer-copyright: #808585;
+
+  /* Радиусы из макета */
+  --radius-card: 12px;
+  --radius-day: 18px;
+  --radius-slot: 8px;
+  --radius-btn: 8px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background-color: var(--color-bg);
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 14px;
+  line-height: 1.4;
+  color: var(--color-ink);
+}
+
+h1, h2, h3, p, ul, ol {
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  max-width: 1024px;
+  margin: 0 auto;
+  padding: 0 48px;
+}
+
+/* ============================================================
+   Шапка
+   ============================================================ */
+
+.site-header {
+  background-color: var(--color-surface);
+  border-bottom: 1px solid var(--color-step-line);
+}
+
+.site-header__inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+}
+
+.logo__name {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #000000;
+  line-height: 1.3;
+}
+
+.logo__name span {
+  display: block;
+}
+
+.nav {
+  display: flex;
+  gap: 24px;
+}
+
+.nav__link {
+  padding: 8px 4px;
+  font-size: 14px;
+  color: var(--color-text-secondary);
+  text-decoration: none;
+  cursor: pointer;
+  transition: color 0.15s ease;
+}
+
+.nav__link:hover {
+  color: var(--color-ink);
+}
+
+/* ============================================================
+   Степпер (1 — Мастер, 2 — Услуга, 3 — Календарь, 4 — Контакты, 5 — Подтверждение)
+   ============================================================ */
+
+.steps-section {
+  background-color: var(--color-surface);
+  border-bottom: 1px solid var(--color-step-line);
+}
+
+.steps {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24px 0;
+  list-style: none;
+}
+
+.steps__item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.steps__num {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  font-size: 11px;
+  font-weight: 700;
+  color: #FFFFFF;
+  flex-shrink: 0;
+}
+
+.steps__item--done .steps__num {
+  background-color: var(--color-step-done);
+}
+
+.steps__item--current .steps__num {
+  background-color: var(--color-step-current);
+}
+
+.steps__item--future .steps__num {
+  background-color: var(--color-step-future);
+}
+
+.steps__label {
+  font-size: 14px;
+  color: #000000;
+}
+
+.steps__line {
+  width: 16px;
+  height: 1px;
+  background-color: var(--color-step-line);
+  margin-left: 8px;
+}
+
+/* ============================================================
+   Основной контент
+   ============================================================ */
+
+.page {
+  padding: 40px 0 64px;
+}
+
+.page__title {
+  margin-bottom: 32px;
+  font-size: 24px;
+  font-weight: 400;
+  letter-spacing: 0.4em;
+  color: #000000;
+}
+
+.page__layout {
+  display: flex;
+  align-items: flex-start;
+  gap: 32px;
+}
+
+.card {
+  background-color: var(--color-surface);
+  border-radius: var(--radius-card);
+  padding: 24px;
+}
+
+.card--calendar {
+  flex: 1;
+}
+
+.card--time {
+  width: 380px;
+  flex-shrink: 0;
+}
+
+/* ---------- Календарь ---------- */
+
+.card--calendar {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.calendar__head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.calendar__month {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--color-heading);
+}
+
+.calendar__nav {
+  display: flex;
+  gap: 8px;
+}
+
+.calendar__arrow {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 26px;
+  height: 26px;
+  border: none;
+  border-radius: 6px;
+  background-color: var(--color-arrow-bg);
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+
+.calendar__arrow:hover {
+  background-color: var(--color-arrow-bg-hover);
+}
+
+.calendar__weekdays,
+.calendar__days {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 6px 8px;
+}
+
+.calendar__weekdays span {
+  text-align: center;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--color-heading);
+}
+
+.day {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 36px;
+  border: none;
+  border-radius: var(--radius-day);
+  font-family: inherit;
+  font-size: 13px;
+}
+
+.day--free {
+  background-color: var(--color-day-bg);
+  color: var(--color-heading);
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+
+.day--free:hover {
+  background-color: var(--color-day-bg-hover);
+}
+
+.day--selected {
+  background-color: var(--color-slot-selected);
+  color: #FFFFFF;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.day--muted,
+.day--off,
+.day--disabled {
+  background-color: transparent;
+  color: var(--color-text-muted);
+  cursor: default;
+}
+
+/* ---------- Слоты времени ---------- */
+
+.card--time {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.time__title {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--color-heading);
+}
+
+.time__grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px 24px;
+}
+
+.slot {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 48px;
+  border: 1px solid var(--color-slot-border);
+  border-radius: var(--radius-slot);
+  background-color: var(--color-surface);
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--color-heading);
+  cursor: pointer;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.slot:hover {
+  border-color: var(--color-slot-border-hover);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.slot__note {
+  font-size: 10px;
+  font-weight: 400;
+  color: var(--color-text-muted);
+}
+
+.slot--busy {
+  background-color: var(--color-slot-busy-bg);
+  border-color: var(--color-slot-busy-bg);
+  color: var(--color-text-muted);
+  cursor: not-allowed;
+}
+
+.slot--busy:hover {
+  border-color: var(--color-slot-busy-bg);
+  box-shadow: none;
+}
+
+.slot--selected {
+  background-color: var(--color-slot-selected);
+  border-color: var(--color-slot-selected);
+  color: #FFFFFF;
+}
+
+/* ---------- Кнопки «Назад» / «Далее» ---------- */
+
+.page__actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 32px;
+}
+
+.btn {
+  height: 48px;
+  padding: 0 36px;
+  border: none;
+  border-radius: var(--radius-btn);
+  background-color: var(--color-ink);
+  font-family: inherit;
+  font-size: 18px;
+  color: #FFFFFF;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+
+.btn:hover {
+  background-color: #3D3D3D;
+}
+
+.page__summary {
+  font-size: 16px;
+  color: #000000;
+  text-align: center;
+}
+
+/* ============================================================
+   Футер
+   ============================================================ */
+
+.footer {
+  background-color: var(--color-footer-bg);
+  padding: 64px 0;
+}
+
+.footer__cols {
+  display: flex;
+  gap: 40px;
+}
+
+.footer__col {
+  flex: 1;
+}
+
+.footer__heading {
+  margin-bottom: 16px;
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #FFFFFF;
+}
+
+.footer__desc {
+  margin-top: 16px;
+  font-size: 14px;
+  line-height: 1.45;
+  color: var(--color-footer-muted);
+}
+
+.footer__list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.footer__contact {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: var(--color-footer-text);
+}
+
+.footer__contact--phone {
+  color: #FFFFFF;
+}
+
+.footer__phone {
+  font-size: 16px;
+  font-weight: 700;
+  color: #FFFFFF;
+  text-decoration: none;
+  cursor: pointer;
+  transition: opacity 0.15s ease;
+}
+
+.footer__phone:hover {
+  opacity: 0.8;
+}
+
+.footer__hours {
+  font-size: 14px;
+  color: var(--color-footer-text);
+  margin-bottom: 6px;
+}
+
+.footer__bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 48px;
+  padding-top: 24px;
+  border-top: 1px solid var(--color-footer-divider);
+  font-size: 13px;
+  color: var(--color-footer-copyright);
+}
+
+.footer__policy {
+  color: var(--color-footer-copyright);
+  cursor: pointer;
+  transition: color 0.15s ease;
+}
+
+.footer__policy:hover {
+  color: var(--color-footer-text);
+}
+
+/* ============================================================
+   Доступность
+   ============================================================ */
+
+:focus-visible {
+  outline: 2px solid var(--color-ink);
+  outline-offset: 2px;
+}
+
+/* ============================================================
+   Адаптив
+   ============================================================ */
+
+@media (max-width: 1024px) {
+  .container {
+    padding: 0 24px;
+  }
+}
+
+@media (max-width: 860px) {
+  .site-header__inner {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .steps {
+    flex-wrap: wrap;
+    gap: 12px;
+    justify-content: flex-start;
+  }
+
+  .steps__line {
+    display: none;
+  }
+
+  .page__layout {
+    flex-direction: column;
+  }
+
+  .card--time {
+    width: 100%;
+  }
+
+  .page__actions {
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .footer__cols {
+    flex-direction: column;
+  }
+}

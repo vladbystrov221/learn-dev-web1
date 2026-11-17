@@ -1,13 +1,7 @@
-// vite.config.js
-import { defineConfig } from "vite";
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react';
 
+// Конфигурация сборщика Vite: React-плагин превращает JSX в JS
 export default defineConfig({
-  server: {
-    port: 3000,
-  },
-  root: ".",
-  build: {
-    outDir: "dist",
-    assetsDir: "assets",
-  },
+  plugins: [react()],
 });
