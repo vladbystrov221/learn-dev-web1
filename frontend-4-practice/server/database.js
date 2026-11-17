@@ -1,65 +1,71 @@
-// «База данных» — пока обычный JS-объект.
-//
-// Содержит только то, что нужно странице календаря:
-//   - today — «сегодня» по мнению сервера;
-//   - slotsEvenDay / slotsOddDay — два набора слотов,
-//     чтобы на клиенте было видно: при смене дня данные разные.
-//
-// Когда появится настоящий backend — этот файл исчезнет,
-// но структура данных сохранится.
-//
-// Правьте данные под свой проект. Ничего страшного, если
-// названия полей не совпадают с примером — сервер отдаст
-// то, что вы здесь напишете. Но клиент должен знать формат.
-export const database = {
-    // «Сегодня» по мнению сервера.
-    // Календарь использует это, чтобы:
-    //   - понять, какой месяц показать при открытии;
-    //   - запретить выбор дней раньше этой даты;
-    //   - подсветить сегодняшний день.
-    //
-    // Формат: { day, month, year }. Месяц — 0-индексный (9 = октябрь).
-    // Меняйте на свой — например, поставьте реальную дату
-    // через new Date() или любую удобную для проверки.
-    today: { day: 17, month: 9, year: 2026 },
-  
-    // Слоты для чётных дней (2, 4, 6, ...).
-    // Каждый слот: { time: "10:00", available: true }.
-    //   time      — время в формате "HH:MM";
-    //   available — true, если слот свободен.
-    //
-    // Сервер сам решает, какой набор отдать — чётный или нечётный.
-    // Клиент этой логики не видит.
-    slotsEvenDay: [
-      { time: "10:00", available: true },
-      { time: "10:30", available: true },
-      { time: "11:00", available: true },
-      { time: "11:30", available: true },
-      { time: "12:00", available: false },
-      { time: "13:00", available: false },
-      { time: "14:30", available: true },
-      { time: "15:00", available: true },
-      { time: "16:00", available: true },
-      { time: "17:30", available: true },
-      { time: "18:00", available: true },
-      { time: "19:30", available: true },
-    ],
-  
-    // Слоты для нечётных дней (1, 3, 5, ...).
-    // Здесь занятые слоты другие — чтобы при клике по дням
-    // пользователь видел, что данные действительно меняются.
-    slotsOddDay: [
-      { time: "10:00", available: true },
-      { time: "10:30", available: true },
-      { time: "11:00", available: false },
-      { time: "11:30", available: true },
-      { time: "12:00", available: true },
-      { time: "13:00", available: true },
-      { time: "14:30", available: true },
-      { time: "15:00", available: true },
-      { time: "16:00", available: false },
-      { time: "17:30", available: true },
-      { time: "18:00", available: true },
-      { time: "19:30", available: true },
-    ],
+/* ============================================================
+   «База данных» имитационного сервера.
+   Здесь живут данные, которые в Задании 3 были захардкожены
+   на клиенте (src/data/slots.js): «сегодня» и слоты времени.
+   Сервер (server.js) берёт их отсюда и отдаёт через /api/*.
+   ============================================================ */
+
+// Слоты времени — как в макете: с 10:00 до 17:00, шаг один час
+const WORK_HOURS = [
+  '10:00', '11:00', '12:00', '13:00',
+  '14:00', '15:00', '16:00', '17:00'
+];
+
+// Выходные (суббота и воскресенье) закрыты — как в макете.
+// Индексация та же, что у клиента (Пн = 0 … Вс = 6): (getDay() + 6) % 7
+const WEEKEND_DAYS = [5, 6];
+
+/**
+ * «Сегодня» на сервере: { day, month, year }.
+ * month 0-индексный (0 = январь) — ровно как в договорённости задания.
+ * Считаем при каждом запросе, чтобы значение не устарело,
+ * даже если dev-сервер работает через полночь.
+ */
+export function getToday() {
+  const now = new Date();
+  return {
+    day: now.getDate(),
+    month: now.getMonth(),
+    year: now.getFullYear(),
   };
+}
+
+/**
+ * Занятость «случайная», но стабильная: один и тот же день
+ * всегда возвращает одни и те же занятые часы (хеш от даты).
+ * Тот же алгоритм, что был в src/data/slots.js в Задании 3,
+ * только теперь он живёт на сервере.
+ */
+function hashDate(day, month, year) {
+  const key = year + '-' + (month + 1) + '-' + day;
+  let hash = 0;
+  for (let i = 0; i < key.length; i++) {
+    hash = (hash * 31 + key.charCodeAt(i)) % 997;
+  }
+  return hash;
+}
+
+/**
+ * Слоты на дату: [{ time: '10:00', available: true }, …].
+ * Формат слота из задания — { time, available }.
+ */
+export function getSlotsForDate(day, month, year) {
+  const date = new Date(year, month, day);
+  const dayIndex = (date.getDay() + 6) % 7; // Пн = 0 … Вс = 6 — как на клиенте
+  const closed = WEEKEND_DAYS.includes(dayIndex);
+  const hash = hashDate(day, month, year);
+
+  const slots = WORK_HOURS.map((time, index) => {
+    // В выходные салон закрыт — все слоты недоступны
+    const busy = closed || (hash + index * 7) % 10 < 3;
+    return { time: time, available: !busy };
+  });
+
+  // Гарантия: в рабочий день хотя бы один свободный слот всегда есть.
+  // В закрытые выходные гарантия не применяется — там все слоты заняты.
+  if (!closed && slots.every((slot) => !slot.available)) {
+    slots[0].available = true;
+  }
+
+  return slots;
+}
